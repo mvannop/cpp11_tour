@@ -1,0 +1,33 @@
+\documentclass{beamer}
+\usepackage{listings}
+\usepackage[utf8]{inputenc}
+\usepackage{xcolor}
+\usetheme{Warsaw}
+\title{C++11 tour\\What will it change for library designers?}
+\author{Maxime van Noppen\\maxime.van.noppen@gmail.com}
+\date{24 July 2012}
+\begin{document}
+
+\lstdefinelanguage{cpp}[]{C++}%
+  {
+    deletekeywords={bool,wchar_t,char,double,float,int,long,short,signed,unsigned,void},
+    classoffset=0,
+    keywordstyle=\color{orange},
+    classoffset=1,
+    morekeywords={bool,wchar_t,char,double,float,int,long,short,signed,unsigned,void},
+    keywordstyle=\color{blue},
+    classoffset=0
+  }%
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{lol}
+\lstinputlisting[language=cpp]{test.cc}
+
+
+\end{frame}
+
+\end{document}
