@@ -1,12 +1,13 @@
-\documentclass{beamer}
+\documentclass[xcolor=dvipsnames]{beamer}
 \usepackage{listings}
 \usepackage[utf8]{inputenc}
-\usepackage{xcolor}
 \usetheme{Warsaw}
-\title{C++11 tour\\What will it change for library designers?}
-\author{Maxime van Noppen\\maxime.van.noppen@gmail.com}
+\title[C++11 tour\hspace{25mm} \insertframenumber/\inserttotalframenumber]{C++11 tour\\What will it change for library designers?}
+\author{Maxime van Noppen}
 \date{24 July 2012}
 \begin{document}
+
+%\definecolor{lightgrey}{gray}{0.8}
 
 \lstdefinelanguage{cpp}[]{C++}%
   {
@@ -16,18 +17,204 @@
     classoffset=1,
     morekeywords={bool,wchar_t,char,double,float,int,long,short,signed,unsigned,void},
     keywordstyle=\color{blue},
-    classoffset=0
+    classoffset=0,
+    basicstyle=\footnotesize,
+    commentstyle=\color{red},
+    showspaces=false,
+    showstringspaces=false
   }%
+
+\AtBeginSection[]
+{
+  \begin{frame}{Outline}
+    \tableofcontents[currentsection,currentsubsection]
+  \end{frame}
+} 
+
 
 \begin{frame}
 \titlepage
 \end{frame}
 
+\begin{frame}{Table of contents}
+\tableofcontents
+\end{frame}
+
+\section{Big picture}
+\subsection{What could change?}
+\begin{frame}
+\frametitle{The big picture: what could change?}
+
+Adopting C++11 should hopefully help us to:
+
+\begin{itemize}
+  \item Improve maintainibility: less overhead, less bloat
+  \pause
+  \item Improve performances: new ways to manipulate objects
+  \pause
+  \item Create new designs enabling new features: new OO and generic language features
+\end{itemize}
+
+\pause
+At the end of the day:
+\begin{itemize}
+  \item Developpment costs should decrease for the library developper \textbf{and} the library user
+  \pause
+  \item Product value should increase
+\end{itemize}
+\end{frame}
+
+\subsection{Work in progress}
 \begin{frame}[fragile]
-\frametitle{lol}
-\lstinputlisting[language=cpp]{test.cc}
+\frametitle{The big picture: Work in progress}
 
+\begin{itemize}
+  \item Fully-compliant compilers not expected before 2013\ldots
+  \pause
+  \item \ldots but recent compilers (g++ 4.7, llvm 3.1, MSVC 11) are moving fast\ldots
+  \pause
+  \item \ldots and this is great compared to C++98/C++03 compilers lag.
+  \pause
+  \item {\footnotesize \url{https://wiki.apache.org/stdcxx/C%2B%2B0xCompilerSupport}}
+\end{itemize}
 
+\pause
+
+\begin{itemize}
+  \item Using C++11 feels like exploring a new language
+  \pause
+  \item No "best pratices" set in stone yet
+  \pause
+  \item C++1x (C++17?) is already in the tubes
+\end{itemize}
+\end{frame}
+
+\section{Rvalue references}
+\begin{frame}[fragile]
+  \frametitle{Problem}
+
+  \lstinputlisting[language=cpp]{src/problem.cc}
+
+  \begin{itemize}
+    \item Copying a temporary might be very expensive
+    \item No easy solution
+    \item We have to hope that "return value optimisation" (RVO) kicks in
+    \item What happens with complex formulas mixing a lot of operators?
+  \end{itemize}
+\end{frame}
+\begin{frame}[fragile]
+  \begin{itemize}
+    \item Avoid deep-copying temporaries
+    \pause
+    \item More reliable than "return value optimisation" (RVO)
+    \pause
+    \item Eases writing of overloaded operators on complex types
+  \end{itemize}
+
+  \lstinputlisting[language=cpp]{src/rvalue_ref_01.cc}
+  \pause
+  \begin{itemize}
+    \item Simply recompiling code with a move-enabled STL may increase performances
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \begin{itemize}
+    \item Create a move constructor
+  \end{itemize}
+
+  \lstinputlisting[language=cpp]{src/rvalue_ref_02.cc}
+\end{frame}
+
+\section{Variadic templates}
+\begin{frame}[fragile]
+  \frametitle{Problem}
+  What is a \textbf{generic} function?
+  \pause
+  \begin{itemize}
+    \item Generic on the \textbf{type} of its arguments
+      \pause
+    \item Generic on the \textbf{number} of its arguments
+  \end{itemize}
+  \pause
+  Challenge: write a 'min' function which takes an arbitrary number of arguments
+  of any type and returns the smallest in C++03.\\
+  \pause
+  To support up to \verb#N# arguments there needs to be \verb#N# overloads\ldots
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Introducing variadic templates}
+  \begin{itemize}
+    \item Combination of the old '\ldots' (think of printf) and classic templates
+    \pause
+    \item What about our challenge?
+    \pause
+  \end{itemize}
+
+  \lstinputlisting[language=cpp]{src/min.cc}
+
+  \begin{itemize}
+    \item Very efficient thanks to inlining
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+    
+  \frametitle{A typesafe printf!}
+
+  \lstinputlisting[language=cpp]{src/variadic_01.cc}
+\end{frame}
+
+\section{Rvalue references + variadic templates}
+\begin{frame}[fragile]
+  \frametitle{Problem}
+  Writing a generic "make\_shared" function which \textbf{constructs} the object.\\
+  Either:
+  \begin{itemize}
+    \item Create \textbf{a lot} of overloads\ldots
+      \pause
+    \item Add constraints on the type, typically being default constructible
+      \pause
+    \item \ldots don't construct the object but take a pointer to an already constructed object\ldots
+  \end{itemize}
+
+  \lstinputlisting[language=cpp]{src/boost_shared.cc}
+
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Perfect forwarding to the rescue!}
+  \begin{itemize}
+    \item Rvalue references + variadic templates = perfect forwarding
+  \end{itemize}
+
+  \lstinputlisting[language=cpp]{src/make_shared.cc}
+  \pause
+  \begin{itemize}
+    \item Used in the STL to create emplace\_* methods
+  \end{itemize}
+
+  \lstinputlisting[language=cpp]{src/emplace.cc}
+\end{frame}
+
+\section{Conclusion}
+\begin{frame}
+  \frametitle{Conclusion}
+
+  \emph{"The pieces just fit together better than they used to and I find a
+  higher-level style of programming more natural than before and as efficient as ever"}
+  --- Bjarne Stroustrup {\footnotesize \url{http://www2.research.att.com/~bs/C++0xFAQ.html}}
+
+  \begin{itemize}
+    \item We only scratched the surface of C++11
+    \item Code bloat should decrease while features should increase 
+    \item We will see new paradigms emerge from the new core features
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+  Questions ?
 \end{frame}
 
 \end{document}
