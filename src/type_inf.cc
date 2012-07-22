@@ -12,6 +12,6 @@ auto map(const Cont<Args...>& c, Fun f)
 
 int main()
 {
-  std::vector<int> v = { 42, 51 };
+  std::vector<int> v{ 42, 51 };
   auto s = map(v, [](int n) { return std::to_string(n); });
 }
