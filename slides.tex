@@ -2,8 +2,8 @@
 \usepackage{listings}
 \usepackage[utf8]{inputenc}
 \usetheme{Warsaw}
-\title[C++11 tour\hspace{25mm} \insertframenumber/\inserttotalframenumber]{C++11 tour\\What will it change for library designers?}
-\author{Maxime van Noppen}
+\title[C++11 tour\hspace{25mm} \insertframenumber/\inserttotalframenumber]{C++11 tour\\What will change for library designers?}
+\author[Maxime van Noppen]{Maxime van Noppen\\maxime.van.noppen@gmail.com\\\url{https://github.com/mvannop/cpp11_tour}}
 \date{24 July 2012}
 \begin{document}
 
@@ -48,7 +48,7 @@
 Adopting C++11 should hopefully help us to:
 
 \begin{itemize}
-  \item Improve maintainibility: less overhead, less bloat
+  \item Improve maintainability: less overhead, less bloat
   \pause
   \item Improve performances: new ways to manipulate objects
   \pause
@@ -58,7 +58,7 @@ Adopting C++11 should hopefully help us to:
 \pause
 At the end of the day:
 \begin{itemize}
-  \item Developpment costs should decrease for the library developper \textbf{and} the library user
+  \item Development costs should decrease for the library developer \textbf{and} the library user
   \pause
   \item Product value should increase
 \end{itemize}
@@ -83,7 +83,7 @@ At the end of the day:
 \begin{itemize}
   \item Using C++11 feels like exploring a new language
   \pause
-  \item No "best pratices" set in stone yet
+  \item No "best practices" set in stone yet
   \pause
   \item C++1x (C++17?) is already in the tubes
 \end{itemize}
@@ -132,14 +132,20 @@ At the end of the day:
   What is a \textbf{generic} function?
   \pause
   \begin{itemize}
-    \item Generic on the \textbf{type} of its arguments
-      \pause
-    \item Generic on the \textbf{number} of its arguments
+    \item In C++03: generic on the \textbf{type} of its arguments\\
+      \begin{lstlisting}[language=cpp]
+        template <typename T> void foo(T t) { }
+      \end{lstlisting}
+    \pause
+    \item But not generic on the \textbf{number} of its arguments
+    \pause
+    \item What about the good old printf-style functions?
   \end{itemize}
   \pause
   Challenge: write a 'min' function which takes an arbitrary number of arguments
   of any type and returns the smallest in C++03.\\
   \pause
+  \vspace{0.5cm}
   To support up to \verb#N# arguments there needs to be \verb#N# overloads\ldots
 \end{frame}
 
@@ -203,18 +209,56 @@ At the end of the day:
 
   \emph{"The pieces just fit together better than they used to and I find a
   higher-level style of programming more natural than before and as efficient as ever"}
-  --- Bjarne Stroustrup {\footnotesize \url{http://www2.research.att.com/~bs/C++0xFAQ.html}}
-
+  --- Bjarne Stroustrup {\footnotesize \url{http://www2.research.att.com/~bs/C++0xFAQ.html}}\\
+  \vspace{0.2cm}
+  \only<2>{As library designers:}
+  \only<3>{As library users:}
+  \only<2-3>{
+  \begin{itemize}
+    \item More powerful and safe interfaces
+    \item Better performances with simpler designs
+    \item And this with a better maintainability 
+  \end{itemize}}
+  \only<4>{
+  There is much more!
   \begin{itemize}
     \item We only scratched the surface of C++11
     \item Code bloat should decrease while features should increase 
     \item We will see new paradigms emerge from the new core features
-  \end{itemize}
-
+  \end{itemize}}
 \end{frame}
 
 \begin{frame}
-  Questions ?
+  \frametitle{Bibliography}
+  \begin{itemize}
+    \item C++ Now! (former BoostCon) \url{http://cppnow.org}
+      \begin{itemize}
+        \item \textbf{Leor Zolman}: A Whirlwind Overview of C++11
+        \item \textbf{Alisdair Meredith}: Lessons Learned Developing the C++11 Standard Library
+        \item \textbf{Howard Hinnant}: What’s new with C++11 containers?
+        \item \textbf{Scott Schurr}: C++11: New Tools for Class and Library Authors
+        \item \url{http://cppnow.org/schedule-table/}
+      \end{itemize}
+    \item \textbf{Bjarne Stroustrup}: {\footnotesize \url{http://www2.research.att.com/~bs/}}
+    \item \textbf{C++Next}: \url{http://cpp-next.com/}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \begin{center}
+    Questions ?
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile, noframenumbering]
+  \frametitle{Mixins}
+  \lstinputlisting[language=cpp]{src/mixins.cc}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Type inference}
+  
+  \lstinputlisting[language=cpp]{src/type_inf.cc}
 \end{frame}
 
 \end{document}

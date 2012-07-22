@@ -12,7 +12,7 @@ template <typename T> class Matrix
     T* data;
 };
   Matrix<double> m(3, 3);
-  // m.data=0x9973008
+  // m.data == 0x9973008
   Matrix<double> n = std::move(m);
-  // m.data=0
-  // n.data=0x9973008
+  // m.data == 0
+  // n.data == 0x9973008
