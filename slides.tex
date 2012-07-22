@@ -2,7 +2,11 @@
 \usepackage{listings}
 \usepackage[utf8]{inputenc}
 \usetheme{Warsaw}
-\title[C++11 tour\hspace{25mm} \insertframenumber/\inserttotalframenumber]{C++11 tour\\What will change for library designers?}
+
+% www.parashift.com/c++-faq-lite/latex-macros.html
+\newcommand{\CC}{C\nolinebreak\hspace{-.05em}\raisebox{.4ex}{\scriptsize\bf +}\nolinebreak\hspace{-.05em}\raisebox{.4ex}{\scriptsize\bf +}}
+
+\title[\CC{}11 tour\hspace{25mm} \insertframenumber/\inserttotalframenumber]{\CC{}11 tour\\What will change for library designers?}
 \author[Maxime van Noppen]{Maxime van Noppen\\maxime.van.noppen@gmail.com\\\url{https://github.com/mvannop/cpp11_tour}}
 \date{24 July 2012}
 \begin{document}
@@ -45,7 +49,7 @@
 \begin{frame}
 \frametitle{The big picture: what could change?}
 
-Adopting C++11 should hopefully help us to:
+Adopting \CC{}11 should hopefully help us to:
 
 \begin{itemize}
   \item Improve maintainability: less overhead, less bloat
@@ -73,7 +77,7 @@ At the end of the day:
   \pause
   \item \ldots but recent compilers (g++ 4.7, llvm 3.1, MSVC 11) are moving fast\ldots
   \pause
-  \item \ldots and this is great compared to C++98/C++03 compilers lag.
+  \item \ldots and this is great compared to \CC{}98/\CC{}03 compilers lag.
   \pause
   \item {\footnotesize \url{https://wiki.apache.org/stdcxx/C%2B%2B0xCompilerSupport}}
 \end{itemize}
@@ -81,11 +85,11 @@ At the end of the day:
 \pause
 
 \begin{itemize}
-  \item Using C++11 feels like exploring a new language
+  \item Using \CC{}11 feels like exploring a new language
   \pause
   \item No "best practices" set in stone yet
   \pause
-  \item C++1x (C++17?) is already in the tubes
+  \item \CC{}1x (\CC{}17?) is already in the tubes
 \end{itemize}
 \end{frame}
 
@@ -132,7 +136,7 @@ At the end of the day:
   What is a \textbf{generic} function?
   \pause
   \begin{itemize}
-    \item In C++03: generic on the \textbf{type} of its arguments\\
+    \item In \CC{}03: generic on the \textbf{type} of its arguments\\
       \begin{lstlisting}[language=cpp]
         template <typename T> void foo(T t) { }
       \end{lstlisting}
@@ -143,7 +147,7 @@ At the end of the day:
   \end{itemize}
   \pause
   Challenge: write a 'min' function which takes an arbitrary number of arguments
-  of any type and returns the smallest in C++03.\\
+  of any type and returns the smallest in \CC{}03.\\
   \pause
   \vspace{0.5cm}
   To support up to \verb#N# arguments there needs to be \verb#N# overloads\ldots
@@ -222,7 +226,7 @@ At the end of the day:
   \only<4>{
   There is much more!
   \begin{itemize}
-    \item We only scratched the surface of C++11
+    \item We only scratched the surface of \CC{}11
     \item Code bloat should decrease while features should increase 
     \item We will see new paradigms emerge from the new core features
   \end{itemize}}
@@ -231,16 +235,16 @@ At the end of the day:
 \begin{frame}
   \frametitle{Bibliography}
   \begin{itemize}
-    \item C++ Now! (former BoostCon) \url{http://cppnow.org}
+    \item \CC{} Now! (former BoostCon) \url{http://cppnow.org}
       \begin{itemize}
-        \item \textbf{Leor Zolman}: A Whirlwind Overview of C++11
-        \item \textbf{Alisdair Meredith}: Lessons Learned Developing the C++11 Standard Library
-        \item \textbf{Howard Hinnant}: What’s new with C++11 containers?
-        \item \textbf{Scott Schurr}: C++11: New Tools for Class and Library Authors
+        \item \textbf{Leor Zolman}: A Whirlwind Overview of \CC{}11
+        \item \textbf{Alisdair Meredith}: Lessons Learned Developing the \CC{}11 Standard Library
+        \item \textbf{Howard Hinnant}: What’s new with \CC{}11 containers?
+        \item \textbf{Scott Schurr}: \CC{}11: New Tools for Class and Library Authors
         \item \url{http://cppnow.org/schedule-table/}
       \end{itemize}
     \item \textbf{Bjarne Stroustrup}: {\footnotesize \url{http://www2.research.att.com/~bs/}}
-    \item \textbf{C++Next}: \url{http://cpp-next.com/}
+    \item \textbf{\CC{}Next}: \url{http://cpp-next.com/}
   \end{itemize}
 \end{frame}
 
