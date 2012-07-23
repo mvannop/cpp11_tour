@@ -2,7 +2,7 @@ template <typename T> class Matrix
 {
   public:
     Matrix(int n, int m) : data(new T[n * m]) { }
-    ~Matrix() { delete data; }
+    ~Matrix() { delete[] data; }
     Matrix(Matrix&& tmp)
     {
       data = tmp.data;
